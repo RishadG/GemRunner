@@ -16,7 +16,7 @@ public class movingObsticle : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        playerOBJ = GameObject.Find("Player");
+        playerOBJ = GameObject.Find("Michelle");
     }
     void Start()
     {

@@ -7,26 +7,40 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
-    public Vector3 slowDownOffset;
-    // Start is called before the first frame update
-    
+    private float posY = 4.6f, posZ = 0;
+   // Start is called before the first frame update
     // Update is called once per frame
     public void LateUpdate()
     {
         normalCam();
     }
 
-    public void moveCameraToPlayer()
+    private void Awake()
     {
-        Vector3 desiredPosition = new Vector3(target.position.x + slowDownOffset.x, transform.position.y + slowDownOffset.y, transform.position.z  +slowDownOffset.z);
-        Vector3 SmoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = SmoothedPosition;
+        if(PlayerPrefs.HasKey("CameraX"))
+        {
+            offset.x = PlayerPrefs.GetFloat("CameraX");
+        }
+        if (PlayerPrefs.HasKey("CameraY"))
+        {
+            //move the camera to this
+            posY = PlayerPrefs.GetFloat("CameraY");
+        }
+        if (PlayerPrefs.HasKey("CameraZ"))
+        {
+            //move the camera to this
+            posZ = PlayerPrefs.GetFloat("CameraZ");
+        }
 
     }
+
     public void normalCam()
     {
-        Vector3 desiredPosition = new Vector3(target.position.x + offset.x, transform.position.y, transform.position.z);
+        //crosshair.SetActive(false);
+        Vector3 desiredPosition = new Vector3(target.position.x + offset.x, posY, posZ);
         Vector3 SmoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = SmoothedPosition;
+        transform.position = desiredPosition;
+     //   transform.LookAt(target.position);
     }
+    
 }

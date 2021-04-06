@@ -18,7 +18,7 @@ public class readCsv : MonoBehaviour
     private char lineSeperater = '\n'; // It defines line seperate character
     private char fieldSeperator = ';'; // It defines field seperate chracter
     float step; // decides how far apart to space the fields
-    public GameObject floor, obsticle, movingObsticle, smallObsticle, endLevel;
+    public GameObject floor, obsticle, movingObsticle, smallObsticle, endLevel, gem;
     float[] coordinates = { 2, 0, -2 };
     Platform platformData;  
     float offset = 20f;
@@ -59,12 +59,13 @@ public class readCsv : MonoBehaviour
                     string[] breakfields = field.Split('|');
                     if(breakfields.Length > 1)
                     {
+                        // only for the moving platform since we need 2 values from it
                         if (breakfields[0] == "m")
                         {
                             // if it is a moving obsticle, create it here
                             createMovingObsticle(new Vector3((-lineNumber * step) + offset, 0.7f, -coordinates[fieldNumber - 1]), -coordinates[int.Parse(breakfields[1])]);
                         }
-                        else
+                        else // for everything else
                         {
                             foreach (string fieldVal in breakfields)
                             {
@@ -117,6 +118,10 @@ public class readCsv : MonoBehaviour
     {
         GameObject instantiateSmallObsticle = Instantiate(smallObsticle, ObsticlePosition, Quaternion.identity);   
         
+    }
+    void createGem(Vector3 GemPosition)
+    {
+        GameObject instantiateGem= Instantiate(gem, GemPosition, Quaternion.identity);
     }
     void createMovingObsticle(Vector3 ObsticlePosition, float moveby)
     {
@@ -211,6 +216,9 @@ public class readCsv : MonoBehaviour
             case "s":
                 // create an object
                 createSmallObsticle(new Vector3((-lineNumber * step) + offset, 0.8f, -coordinates[fieldNumber - 1]));
+                break;
+            case "g":
+                createGem(new Vector3((-lineNumber * step) + offset, 0.8f, -coordinates[fieldNumber - 1]));
                 break;
             case "e":
                 createFinishLine(new Vector3((-lineNumber * step) + offset, 0.7f, -coordinates[fieldNumber - 1]));

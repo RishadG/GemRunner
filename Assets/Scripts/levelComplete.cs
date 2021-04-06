@@ -7,7 +7,8 @@ public class levelComplete : MonoBehaviour
     {
         if (collider.tag == "Player")
         {
-            FindObjectOfType<GameMonitor>().LevelComplete();
+            GameMonitor gm = FindObjectOfType<GameMonitor>();
+            gm.LevelComplete();
             Debug.Log("level complete");
         }
             

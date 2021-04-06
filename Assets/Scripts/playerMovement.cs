@@ -28,8 +28,8 @@ public class playerMovement : MonoBehaviour
 
     private void Awake()
     {
-         AS = GetComponent<AudioSource>();
-        animator = GetComponent<Animator>();
+        AS = GetComponent<AudioSource>();
+      //  animator = GetComponent<Animator>();
         animator.enabled= false;
         this.testMode = true;
         
@@ -140,50 +140,10 @@ transform.position = Vector3.Lerp(transform.position, new Vector3(transform.posi
         if (transform.position.y < -1)
         {
             animator.SetTrigger("isFalling");
-            endLevel();
+           // endLevel();
 
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag == "Floor")
-        {
-           // Debug.Log("on the ground");
-            isGrounded = true;
-            animator.SetBool("isJumping", false);
-        }
-        if (collision.collider.tag == "Obsticle")
-        {
-            Debug.Log("reset level");
-            animator.SetTrigger("hasDied");
-            AudioSource AS= GetComponent<AudioSource>();
-            AS.clip = gettingHit;
-            AS.loop = false;
-            AS.Play();
-            endLevel();
-
-        }
-
-    }
-
-    private IEnumerator reloadLevel()
-    {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-    }
-    private void endLevel()
-    {
-        StartCoroutine(reloadLevel());
-        //Invoke("reloadLevel", 3f);
-        Component.FindObjectOfType<scoreScript>().enabled = false;
-        rb.velocity = rb.velocity.x * Vector3.zero;
-        animator.enabled = false;
-        this.enabled = false;
-        // show the panel
-        gameOver GO = FindObjectOfType<gameOver>();
-        GO.showGameOver();
-
-    }
+   
 }

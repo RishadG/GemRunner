@@ -3,10 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class GameMonitor : MonoBehaviour
 {
-    public GameObject levelCompletePanel;
     private bool levelComplete = false;
+    public GameObject player;
+    private touchcontrols tc;
+    public Animator animator;
+    private gameOver GO;
     // Start is called before the first frame update
 
+
+    void Awake()
+    {
+        tc = player.GetComponent<touchcontrols>();
+        GO = GetComponent<gameOver>();
+    }
     void Start()
     {
         // display a message to tap
@@ -18,17 +27,25 @@ public class GameMonitor : MonoBehaviour
     {
         if(!levelComplete)
         {
-            levelCompletePanel.SetActive(true);
-            Component.FindObjectOfType<scoreScript>().enabled = false;
+            Debug.Log("showing panel");
+            Rigidbody playerRB = player.GetComponent<Rigidbody>();
+            tc.testMode = true;
+            tc.stopMovement = true;
+            playerRB.velocity = Vector3.zero;
+            animator.SetTrigger("startDance");
+            GO.Invoke("showLevelComplete",2f);
+          //  tc.endLevel();
+            levelComplete = true;
           //  levelCompletePanel.GetComponent<>
-//            Invoke("loadNextScene", 2f);
+          // Invoke("loadNextScene", 2f);
         }
 
     }
     public  void loadNextScene()
     {
+        Debug.Log("Loading next screen");
         Debug.Log(SceneManager.GetActiveScene().buildIndex);
-        if (SceneManager.GetActiveScene().buildIndex == 3)
+        if (SceneManager.GetActiveScene().buildIndex == 2)
         {
             SceneManager.LoadScene(0);
         }
@@ -39,11 +56,13 @@ public class GameMonitor : MonoBehaviour
     }
     public void goToMenu()
     {
+        Debug.Log("go to menu");
         SceneManager.LoadScene(0);
 
     }
     public void RestartLevel()
     {
+        Debug.Log("Restart level");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

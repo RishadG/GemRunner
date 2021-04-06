@@ -22,6 +22,5 @@ public class scoreScript : MonoBehaviour
         scoreText.text =  newScore  + "";
         }
         // Debug.Log("incremented score" + newScore);
-
     }
 }

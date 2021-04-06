@@ -4,7 +4,7 @@ using UnityEngine;
 public class gameOver : MonoBehaviour
 {
     private GameMonitor gameMonitor;
-    public GameObject panel;
+    public GameObject levelCompletePanel, gameOverPanel;
 
     // Start is called before the first frame update
     public void endGame()
@@ -19,8 +19,14 @@ public class gameOver : MonoBehaviour
         gameMonitor = FindObjectOfType<GameMonitor>();
         gameMonitor.RestartLevel();
     }
-    public void showGameOver()
+    public void showGameOver()  
     {
-        panel.SetActive(true);
+        gameOverPanel.SetActive(true);
     }
+
+    public void showLevelComplete()
+    {
+        levelCompletePanel.SetActive(true);
+    }
+    
 }

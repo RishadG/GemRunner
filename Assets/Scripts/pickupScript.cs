@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+ using TMPro;
 
 public class pickupScript : MonoBehaviour
 {
     public GameObject pickupEffect;
-    public Text Score;
     public ParticleSystem pickupParticles;
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider collider)
@@ -21,7 +21,7 @@ public class pickupScript : MonoBehaviour
     }
     private void Pickup()
     {
-        Debug.Log("Called pickup script");
+
 
         pickupParticles.Play();
        // GetComponent<ParticleSystem>().Play();
@@ -29,17 +29,13 @@ public class pickupScript : MonoBehaviour
         em.enabled = true;
         AudioSource al = GetComponent<AudioSource>();
         al.Play();
-
+        // play the score animation
         GetComponent<MeshRenderer>().enabled = false;
+        pickupAnimation pa = FindObjectOfType<pickupAnimation>();
+        pa.startAnimation();
         //Instantiate(pickupEffect, transform.position, transform.rotation);
         //incrementScore(1);
-       // Destroy(gameObject);
+        // Destroy(gameObject);
     }
-    private void incrementScore(int incrementBy)
-    {
-        string[] splitString = Score.text.Split(':');
-        int newScore = int.Parse(splitString[1]) + incrementBy;
-        Score.text = "Score: " + newScore;
-
-    }
+  
 }
